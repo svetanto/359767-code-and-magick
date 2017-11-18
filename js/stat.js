@@ -1,5 +1,4 @@
 'use strict';
-// var times = [1100, 2600, 4750, 590];
 
 window.renderStatistics = function (ctx, names, times) {
   var shiftFromLeft = 130;
@@ -33,12 +32,13 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Ура, вы победили!', shiftFromLeft + 133, shiftFromTop + 48);
   ctx.fillText('Список результатов (мс):', shiftFromLeft + 110, shiftFromTop + 70);
 
+  // Гистограмма
   var histogramHeight = 140;
-  var step = histogramHeight / (getMaxArrayValue(times) - 0);
+  var step = histogramHeight / (getMaxValue(times) - 0);
 
   var barWidth = 40;
   var indent = 70;
-  var initialX = shiftFromLeft + 80;
+  var initialX = shiftFromLeft + 90;
   var initialY = shiftFromTop + 240;
 
   for (var i = 0; i < times.length; i++) {
@@ -51,7 +51,8 @@ window.renderStatistics = function (ctx, names, times) {
 
 };
 
-function getMaxArrayValue(array) {
+// Нахождение наибольшего элемента массива
+function getMaxValue(array) {
   var max = -1;
   for (var i = 0; i < array.length; i++) {
     if (array[i] > max) {
