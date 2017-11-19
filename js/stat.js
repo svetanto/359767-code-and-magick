@@ -5,7 +5,6 @@ window.renderStatistics = function (ctx, names, times) {
   var shiftFromTop = 10;
   var fullCircle = 2 * Math.PI;
 
-  // Облако
   ctx.fillStyle = 'white';
   ctx.strokeStyle = 'blue';
 
@@ -24,7 +23,6 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.closePath();
   ctx.fill();
 
-  // Текст
   ctx.shadowColor = 'rgba(0, 0, 0, 0)';
   ctx.fillStyle = 'black';
   ctx.font = '16px PT Mono';
@@ -32,7 +30,6 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Ура, вы победили!', shiftFromLeft + 133, shiftFromTop + 48);
   ctx.fillText('Список результатов (мс):', shiftFromLeft + 110, shiftFromTop + 70);
 
-  // Гистограмма
   var histogramHeight = 140;
   var step = histogramHeight / (getMaxValue(times) - 0);
 
@@ -42,7 +39,7 @@ window.renderStatistics = function (ctx, names, times) {
   var initialY = shiftFromTop + 240;
 
   for (var i = 0; i < times.length; i++) {
-    (names[i] === 'Вы') ? ctx.fillStyle = 'rgba(255, 0, 0, 1)' : ctx.fillStyle = 'rgba(0, 0, 255, ' + (Math.random() * 0.8 + 0.2) + ')';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255, ' + (Math.random() * 0.8 + 0.2) + ')';
     ctx.fillRect(initialX + indent * i, initialY - times[i] * step, barWidth, times[i] * step);
     ctx.fillStyle = 'black';
     ctx.fillText(times[i].toFixed(0), initialX + indent * i, initialY - times[i] * step - 5);
@@ -51,7 +48,6 @@ window.renderStatistics = function (ctx, names, times) {
 
 };
 
-// Нахождение наибольшего элемента массива
 function getMaxValue(array) {
   var max = -1;
   for (var i = 0; i < array.length; i++) {
