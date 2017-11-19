@@ -31,7 +31,7 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Список результатов (мс):', shiftFromLeft + 110, shiftFromTop + 70);
 
   var histogramHeight = 140;
-  var step = histogramHeight / (getMaxValue(times) - 0);
+  var step = histogramHeight / (getMaxValue(times));
 
   var barWidth = 40;
   var indent = 70;
@@ -39,11 +39,23 @@ window.renderStatistics = function (ctx, names, times) {
   var initialY = shiftFromTop + 240;
 
   for (var i = 0; i < times.length; i++) {
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255, ' + (Math.random() * 0.8 + 0.2) + ')';
-    ctx.fillRect(initialX + indent * i, initialY - times[i] * step, barWidth, times[i] * step);
+    ctx.fillStyle = getColor(names[i]);
+    renderBar(i);
+    printName(i);
     ctx.fillStyle = 'black';
-    ctx.fillText(times[i].toFixed(0), initialX + indent * i, initialY - times[i] * step - 5);
-    ctx.fillText(names[i], initialX + indent * i, initialY + 20);
+    printTime(i);
+  }
+
+  function renderBar(index) {
+    ctx.fillRect(initialX + indent * index, initialY - times[index] * step, barWidth, times[index] * step);
+  }
+
+  function printName(index) {
+    ctx.fillText(names[index], initialX + indent * index, initialY + 20);
+  }
+
+  function printTime(index) {
+    ctx.fillText(times[index].toFixed(0), initialX + indent * index, initialY - times[index] * step - 5);
   }
 
 };
@@ -56,4 +68,16 @@ function getMaxValue(array) {
     }
   }
   return max;
+}
+
+function getColor(name) {
+  if (name === 'Вы') {
+    return 'rgba(255, 0, 0, 1)';
+  }
+  var minColorValue = 50;
+  var maxColorValue = 200;
+  return 'rgb('
+  + (Math.random() * (maxColorValue - minColorValue) + minColorValue).toFixed(0) + ','
+  + (Math.random() * (maxColorValue - minColorValue) + minColorValue).toFixed(0) + ','
+  + (Math.random() * (maxColorValue - minColorValue) + minColorValue).toFixed(0) + ')';
 }
