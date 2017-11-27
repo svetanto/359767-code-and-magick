@@ -1,6 +1,7 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
+
   var shiftFromLeft = 130;
   var shiftFromTop = 10;
   var fullCircle = 2 * Math.PI;
