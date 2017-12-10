@@ -11,6 +11,10 @@
 
   var wizards = getRandomWizards(numberOfWizards);
   var userDialog = document.querySelector('.setup');
+  var userDialogDefaultCoords = {
+    x: userDialog.style.top,
+    y: userDialog.style.left
+  };
   var similarElement = userDialog.querySelector('.setup-similar');
   var similarListElement = userDialog.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
@@ -36,6 +40,8 @@
   });
 
   function openUserDialog() {
+    userDialog.style.top = userDialogDefaultCoords.x;
+    userDialog.style.left = userDialogDefaultCoords.y;
     userDialog.classList.remove('hidden');
     document.addEventListener('keydown', onUserDialogEscPress);
   }
