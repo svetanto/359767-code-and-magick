@@ -11,6 +11,10 @@
 
   var wizards = getRandomWizards(numberOfWizards);
   var userDialog = document.querySelector('.setup');
+  var userDialogDefaultCoords = {
+    x: userDialog.style.top,
+    y: userDialog.style.left
+  };
   var similarElement = userDialog.querySelector('.setup-similar');
   var similarListElement = userDialog.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
@@ -36,6 +40,8 @@
   });
 
   function openUserDialog() {
+    userDialog.style.top = userDialogDefaultCoords.x;
+    userDialog.style.left = userDialogDefaultCoords.y;
     userDialog.classList.remove('hidden');
     document.addEventListener('keydown', onUserDialogEscPress);
   }
@@ -108,6 +114,44 @@
     changingFeature.style[param] = colorValue;
     inputField.value = colorValue;
   }
+
+  // Перетаскивание предметов
+  var shopElement = document.querySelector('.setup-artifacts-shop');
+  var draggedItem = null;
+  var artifactsElement = document.querySelector('.setup-artifacts');
+
+  shopElement.addEventListener('dragstart', function (evt) {
+    if (evt.target.tagName.toLowerCase() === 'img') {
+      draggedItem = evt.target;
+      evt.dataTransfer.setData('text/plain', evt.target.alt);
+    }
+    artifactsElement.style = 'outline: 2px dashed red;';
+  });
+
+  artifactsElement.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+
+  artifactsElement.addEventListener('drop', function (evt) {
+    evt.target.style.backgroundColor = '';
+    if (!evt.target.hasChildNodes()) {
+      evt.target.appendChild(draggedItem.cloneNode(true));
+    }
+    evt.preventDefault();
+    artifactsElement.style = 'outline: none;';
+  });
+
+
+  artifactsElement.addEventListener('dragenter', function (evt) {
+    evt.target.style.backgroundColor = 'yellow';
+    evt.preventDefault();
+  });
+
+  artifactsElement.addEventListener('dragleave', function (evt) {
+    evt.target.style.backgroundColor = '';
+    evt.preventDefault();
+  });
 
 
   function getRandomWizards(wizardsQuantity) {
