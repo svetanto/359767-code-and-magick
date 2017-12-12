@@ -82,37 +82,39 @@
     }
   });
 
-  // Изменение цвета мантии персонажа по нажатию
+  // Изменение цветов свойств персонажа по нажатию
   var wizardCoat = userDialog.querySelector('.wizard-coat');
   var inputWizardCoatColor = userDialog.querySelector('input[name="coat-color"]');
-
-  wizardCoat.addEventListener('click', function (e) {
-    e.preventDefault();
-    changeWizardFeatureColor(COAT_COLORS, wizardCoat, 'fill', inputWizardCoatColor);
-  });
-
-  // Изменение цвета глаз персонажа по нажатию
   var wizardEyes = userDialog.querySelector('.wizard-eyes');
   var inputWizardEyesColor = userDialog.querySelector('input[name="eyes-color"]');
-
-  wizardEyes.addEventListener('click', function (e) {
-    e.preventDefault();
-    changeWizardFeatureColor(EYES_COLORS, wizardEyes, 'fill', inputWizardEyesColor);
-  });
-
-  // Изменение цвета фаерболов по нажатию
   var wizardFireball = userDialog.querySelector('.setup-fireball-wrap');
   var inputWizardFireballColor = userDialog.querySelector('input[name="fireball-color"]');
 
-  wizardFireball.addEventListener('click', function (e) {
+  // Изменение цвета мантии персонажа по нажатию
+  wizardCoat.addEventListener('click', function (e) {
     e.preventDefault();
-    changeWizardFeatureColor(FIREBALL_COLORS, wizardFireball, 'background', inputWizardFireballColor);
+    window.colorizeElement(wizardCoat, COAT_COLORS, fillElement, inputWizardCoatColor);
   });
 
-  function changeWizardFeatureColor(inputValues, changingFeature, param, inputField) {
-    var colorValue = inputValues[window.generateRandomInteger(0, inputValues.length - 1)];
-    changingFeature.style[param] = colorValue;
-    inputField.value = colorValue;
+  // Изменение цвета глаз персонажа по нажатию
+  wizardEyes.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.colorizeElement(wizardEyes, EYES_COLORS, fillElement, inputWizardEyesColor);
+  });
+
+  // Изменение цвета фаерболов по нажатию
+  wizardFireball.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.colorizeElement(wizardFireball, FIREBALL_COLORS, changeElementBackground, inputWizardFireballColor);
+  });
+
+  // Вспомогательные функции изменения цвета
+  function fillElement(element, color) {
+    element.style.fill = color;
+  }
+
+  function changeElementBackground(element, color) {
+    element.style.backgroundColor = color;
   }
 
   // Перетаскивание предметов
