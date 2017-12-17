@@ -9,7 +9,8 @@
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
-  var wizards = getRandomWizards(numberOfWizards);
+  var wizards = window.backend.load();
+  // console.log(wizards);
   var userDialog = document.querySelector('.setup');
   var userDialogDefaultCoords = {
     x: userDialog.style.top,
@@ -191,4 +192,19 @@
     }
     similarList.appendChild(fragment);
   }
+
+  var form = userDialog.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), onSaveSuccess, onSaveError);
+
+    function onSaveSuccess() {
+      userDialog.classList.add('hidden');
+    }
+
+    function onSaveError(errMessage) {
+      console.log(errMessage);
+    }
+
+  });
 })();
